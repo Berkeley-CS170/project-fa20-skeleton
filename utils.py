@@ -38,7 +38,7 @@ def calculate_happiness(D, G):
 
 
     Returns:
-        bool: whether D is a valid solution
+        float: total happiness
     """
     room_to_s = {}
     for k, v in D.items():
