@@ -9,7 +9,6 @@ def is_valid_solution(D, G, s, rooms):
         s: Stress budget
         rooms: Number of breakout rooms
 
-
     Returns:
         bool: whether D is a valid solution
     """
@@ -19,11 +18,9 @@ def is_valid_solution(D, G, s, rooms):
         room_to_student.setdefault(v, []).append(k)
 
     for k, v in room_to_student.items():
-        H = G.subgraph(v)
-        if len(H.edges) > 0:
-            room_stress = H.size("stress")
-            if room_stress > room_budget:
-                return False
+        room_stress = calculate_stress_for_room(v, G)
+        if room_stress > room_budget:
+            return False
     return True
 
 
@@ -36,7 +33,6 @@ def calculate_happiness(D, G):
         s: Stress budget
         k: Number of breakout rooms
 
-
     Returns:
         float: total happiness
     """
@@ -46,8 +42,45 @@ def calculate_happiness(D, G):
 
     happiness_total = 0
     for k, v in room_to_s.items():
-        H = G.subgraph(v)
-        if len(H.edges) > 0:
-            room_happiness = H.size("happiness")
-            happiness_total += room_happiness
+        room_happiness = calculate_happiness_for_room(v, G)
+        happiness_total += room_happiness
     return happiness_total
+
+def convert_dictionary(room_to_student):
+    """
+    Converts the dictionary mapping room_to_student to a valid return of the solver
+    Args:
+        room_to_student: Dictionary of room to a list of students
+    Returns:
+        D: Dictionary mapping student to room
+    e.g {0: [1,2,3]} ==> {1:0, 2:0, 3:0}
+    """
+    d = {}
+    for room, lst in room_to_student.items():
+        for student in lst:
+            d[student] = room
+    return d
+
+def calculate_stress_for_room(arr, G):
+    """
+    Given an array of students in to be placed in a room, calculate stress for the room.
+    Args:
+        arr: Array of students
+        G: Original graph
+    Returns:
+        room_stress: Stress value of the room
+    """
+    H = G.subgraph(arr)
+    return H.size("stress")
+
+def calculate_happiness_for_room(arr, G):
+    """
+    Given an array of students in to be placed in a room, calculate happiness for the room.
+    Args:
+        arr: Array of students
+        G: Original graph
+    Returns:
+        room_happiness: Happiness value of the room
+    """
+    H = G.subgraph(arr)
+    return H.size("happiness")
