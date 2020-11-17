@@ -32,7 +32,6 @@ def read_input_file(path, max_size=None):
         n = int(n)
 
         stress_budget = fo.readline().strip()
-        assert stress_budget.isdigit()
         assert bool(re.match(r"(^\d+\.\d{1,3}$|^\d+$)", stress_budget))
         stress_budget = float(stress_budget)
         assert 0 < stress_budget < 100
