@@ -96,6 +96,7 @@ def read_output_file(path, G, s):
             #validate node
             node = int(tokens[0])
             assert tokens[0].isdigit() and 0 <= node < len(G)
+            assert node not in nodes
             nodes.add(node)
             #validate rooms
             room = int(tokens[1])
