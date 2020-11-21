@@ -118,7 +118,7 @@ def write_output_file(D, path):
     :param D: dict, a mapping
     :return: None -- creates a text file
     """
-    with open(path, "w") as fo:
+    with open(path, "w+") as fo:
         for key, value in D.items():
             fo.write(str(key) + " " + str(value) + "\n")
         fo.close()
