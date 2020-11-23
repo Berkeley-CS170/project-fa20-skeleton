@@ -1,6 +1,7 @@
 import re
 import os
-
+import random
+import sys
 import networkx as nx
 
 import utils
@@ -17,7 +18,7 @@ def validate_file(path):
             return False
     return True
 
-
+0
 def read_input_file(path, max_size=None):
     """
     Parses and validates an input file
@@ -123,3 +124,21 @@ def write_output_file(D, path):
         for key, value in D.items():
             fo.write(str(key) + " " + str(value) + "\n")
         fo.close()
+
+def generate_random(n):
+    """Generates a input file of size n."""
+    n = int(n)
+    path = "samples/" + str(n) + ".in"
+    with open(path, "w+") as fo:
+        for i in range(n):
+            for j in range(i, n):
+                if (i != j):
+                    happiness = random.uniform(0, 100)
+                    stress = random.uniform(0, 100)
+                    fo.write(str(i) + " " + str(j) + " " + str(round(happiness, 3)) + " " + str(round(stress, 3)) + "\n")
+        fo.close()
+
+if __name__ == "__main__":
+    assert len(sys.argv) == 2
+    n = sys.argv[1]
+    generate_random(n)

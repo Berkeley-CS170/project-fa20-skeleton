@@ -15,6 +15,9 @@ def solve(G, s):
     """
 
     # TODO: your code here!
+    retval = {}
+    if (sum(G.edges.data('stress')) <= s):
+        # one room
     pass
 
 
@@ -44,12 +47,4 @@ if __name__ == '__main__':
 
 #pass in 2d array of outputs where each line represents a room,
 # returns a list of tuples where each tuple represents a line in the input
-def backtrack(G):
-    
-# this is commit test 1
-
-
-
-
-
 
