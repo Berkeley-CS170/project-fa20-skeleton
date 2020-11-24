@@ -55,7 +55,7 @@ if __name__ == '__main__':
     D, k = solve(G, s)
     assert is_valid_solution(D, G, s, k)
     cost_t = calculate_happiness(D, G)
-    output_path = 'samples/10.out'
+    output_path = 'samples/50test.out'
     write_output_file(D, output_path)
     D = read_output_file(output_path, G, s)
     print("Total Happiness: {}".format(cost_t))

@@ -132,7 +132,7 @@ def generate_random(n):
             for j in range(i, n):
                 if (i != j):
                     happiness = random.uniform(0, 100)
-                    stress = random.uniform(0, 30)
+                    stress = random.uniform(0, 10)
                     fo.write(str(i) + " " + str(j) + " " + str(round(happiness, 3)) + " " + str(round(stress, 3)) + "\n")
         fo.close()
 
