@@ -15,11 +15,35 @@ def solve(G, s):
     """
 
     # TODO: your code here!
-    retval = {}
-    if (sum(G.edges.data('stress')) <= s):
-        # one room
-    pass
+    ratios = []
+    for u, v, happiness in G.edges.data("happiness"):
+        happy_to_stress_ratio = happiness / G[u][v]["stress"]
+        triple = (u, v, happy_to_stress_ratio)
+        ratios.append(triple)
+    ratios = sorted(ratios, key=lambda x: x[-1])
+    D= {}
+    total_stress = sum(G.edges.data("stress"))
+    for i in G.nodes:
+        D[i] = 0
+    rooms = 1
+    while not is_valid_solution(D, G, s, rooms):
+        for i in range(rooms):
+            people_in_room_i = [person for person in D.keys() if D[person] == i]
+            # ratios_for_room_i = []
+            # for i in range(people_in_room_i):
+            #     ratios_for_room_i[i] = sum(ratio[2] for ratio in ratios if ratios[0] == i)
+            while calculate_stress_for_room(people_in_room_i, i) > s/rooms:
+                min_ratio = float("inf")
+                for person in range(rooms):
+                    my_ratio = sum([ratio[2] for ratio in ratios if ratios[0] == person])
+                    if sum < min_ratio:
+                        person_to_take_out = me
+                person_to_take_out = next(i[0] for i in ratios if (i[0] in people_in_room_i and i[1] in people_in_room_i))
+                D[person_to_take_out] = i + 1
+        i = 0
+    return D
 
+# sorted(g.edges(data=True),key= lambda x: x[2]['callDuration'],reverse=True)
 
 # Here's an example of how to run your solver.
 
