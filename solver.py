@@ -1,6 +1,6 @@
 import networkx as nx
 from parse import read_input_file, write_output_file, read_output_file
-from utils import is_valid_solution, calculate_happiness
+from utils import is_valid_solution, calculate_happiness, calculate_stress_for_room
 import sys
 
 
@@ -22,26 +22,25 @@ def solve(G, s):
         ratios.append(triple)
     ratios = sorted(ratios, key=lambda x: x[-1])
     D= {}
-    total_stress = sum(G.edges.data("stress"))
+    total_stress = 0
+    for u, v, stress in G.edges.data("stress"):
+        total_stress = total_stress + stress
     for i in G.nodes:
         D[i] = 0
     rooms = 1
     while not is_valid_solution(D, G, s, rooms):
         for i in range(rooms):
             people_in_room_i = [person for person in D.keys() if D[person] == i]
-            # ratios_for_room_i = []
-            # for i in range(people_in_room_i):
-            #     ratios_for_room_i[i] = sum(ratio[2] for ratio in ratios if ratios[0] == i)
-            while calculate_stress_for_room(people_in_room_i, i) > s/rooms:
+            while calculate_stress_for_room(people_in_room_i, G) > s/rooms:
                 min_ratio = float("inf")
-                for person in range(rooms):
+                for person in people_in_room_i:
                     my_ratio = sum([ratio[2] for ratio in ratios if ratios[0] == person])
-                    if sum < min_ratio:
-                        person_to_take_out = me
-                person_to_take_out = next(i[0] for i in ratios if (i[0] in people_in_room_i and i[1] in people_in_room_i))
+                    if my_ratio < min_ratio:
+                        person_to_take_out = person
                 D[person_to_take_out] = i + 1
-        i = 0
-    return D
+                people_in_room_i.remove(person_to_take_out)
+        rooms = rooms + 1
+    return D, rooms
 
 # sorted(g.edges(data=True),key= lambda x: x[2]['callDuration'],reverse=True)
 
@@ -53,8 +52,13 @@ if __name__ == '__main__':
     assert len(sys.argv) == 2
     path = sys.argv[1]
     G, s = read_input_file(path)
-    D = read_output_file('samples/10.out', G, s)
-    print("Total Happiness: {}".format(calculate_happiness(D, G)))
+    D, k = solve(G, s)
+    assert is_valid_solution(D, G, s, k)
+    cost_t = calculate_happiness(D, G)
+    output_path = 'samples/10.out'
+    write_output_file(D, output_path)
+    D = read_output_file(output_path, G, s)
+    print("Total Happiness: {}".format(cost_t))
     # write_output_file(D, 'out/test.out')
 
 
@@ -71,4 +75,3 @@ if __name__ == '__main__':
 
 #pass in 2d array of outputs where each line represents a room,
 # returns a list of tuples where each tuple represents a line in the input
-

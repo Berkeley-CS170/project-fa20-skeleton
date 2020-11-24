@@ -18,11 +18,9 @@ def validate_file(path):
             return False
     return True
 
-0
 def read_input_file(path, max_size=None):
     """
     Parses and validates an input file
-
     :param path: str, a path
     :param max_size: int, number of max add_nodes_from
     :return: networkx Graph is the input is well formed, AssertionError thrown otherwise
@@ -134,7 +132,7 @@ def generate_random(n):
             for j in range(i, n):
                 if (i != j):
                     happiness = random.uniform(0, 100)
-                    stress = random.uniform(0, 100)
+                    stress = random.uniform(0, 30)
                     fo.write(str(i) + " " + str(j) + " " + str(round(happiness, 3)) + " " + str(round(stress, 3)) + "\n")
         fo.close()
 
