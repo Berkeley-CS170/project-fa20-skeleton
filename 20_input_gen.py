@@ -1,18 +1,7 @@
 import random
 
-groups = [[1, 6, 2, 4, 15], [3, 20, 21], [0, 5, 7, 24], [8, 12], [9, 19], [10, 17, 16], [18, 11, 13, 14, 23], [25, 29, 31, 39, 42, 43, 44, 45, 49], [26, 32, 38, 46, 47, 48], [27, 28, 30, 34, 40, 41], [22, 33, 36, 35, 37]]
+groups = [[1, 2, 5, 9], [0, 3, 10, 14, 19], [4, 7, 8, 11, 12, 13, 15, 17, 18], [6, 16]]
 groupdict = {}
-
-size = 0
-for group in groups:
-	size = size + len(group)
-
-if size != 50:
-	print("WRONG SIZE")
-else: 
-	print("CORRECT SIZE")
-
-
 
 for group in groups: 
 	for i in range(len(group)):
@@ -38,19 +27,17 @@ for i in range(0, 50):
 		else: 
 			maindict[str([i, j])] = groupdict[str([i, j])]
 
+"""
+"[41, 44]"  :  "['16.18', '3.98']"
 
-# String Output 
+41 44 16.18 3.98
+
+"""
 
 for key, value in maindict.items():
-	myStr = key + value
-	myStr = myStr.replace(']', ' ')
-	myStr = myStr.replace('[', ' ')
-	myStr = myStr.replace(',', ' ')
-	myStr = myStr.replace('\'', ' ')
-	# print(myStr)
-	vals = [s for s in myStr.split() if s.replace('.', '').isdigit()]
-	print(vals[0] + ' ' + vals[1] + ' ' + vals[2] + ' ' + vals[3])
-
+	total = key + value
+	vals = [s for s in total.split() if s.isdigit() or s == '.']
+	print([i for i in vals])
 
 print(len(maindict))
 
