@@ -27,8 +27,18 @@ for i in range(0, 50):
 		else: 
 			maindict[str([i, j])] = groupdict[str([i, j])]
 
+
+# String Output 
+
 for key, value in maindict.items():
-	print(key, ' : ', value)
+	myStr = key + value
+	myStr = myStr.replace(']', ' ')
+	myStr = myStr.replace('[', ' ')
+	myStr = myStr.replace(',', ' ')
+	myStr = myStr.replace('\'', ' ')
+	# print(myStr)
+	vals = [s for s in myStr.split() if s.replace('.', '').isdigit()]
+	print(vals[0] + ' ' + vals[1] + ' ' + vals[2] + ' ' + vals[3])
 
 print(len(maindict))
 
