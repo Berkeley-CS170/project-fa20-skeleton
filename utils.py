@@ -19,7 +19,7 @@ def is_valid_solution(D, G, s, rooms):
 
     for k, v in room_to_student.items():
         room_stress = calculate_stress_for_room(v, G)
-        if room_stress > room_budget:
+        if room_stress > (room_budget + 0.00001):
             return False
     return True
 
